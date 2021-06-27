@@ -1,26 +1,25 @@
 package liveproject.webreport.match;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
 import liveproject.webreport.season.Season;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.util.Collections;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MatchServiceTest {
     public static final String SEASON_STR = "1910-1911";
     public static final String WINSTON_CHURCHILL = "Winston Churchill";
     private final MatchRepository matchRepository = Mockito.mock(MatchRepository.class);
     private MatchService matchService;
 
-    @Before
+    @BeforeEach
     public void setup() {
         matchService = new MatchService(matchRepository);
         Match theGame = Match.builder()
