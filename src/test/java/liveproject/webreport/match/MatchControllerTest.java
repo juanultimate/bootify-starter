@@ -38,7 +38,7 @@ public class MatchControllerTest {
   @Test
   public void find_shouldAddSeasonToModelAndRenderSeasonReportView() throws Exception {
 
-    mockMvc.perform(get("/reports/season-report/"+SEASON_STR))
+    mockMvc.perform(get("/reports/season-report?seasonSelected="+SEASON_STR))
             .andExpect(status().isOk())
             .andExpect(view().name("reports/SeasonReport"))
             .andExpect(forwardedUrl("reports/SeasonReport"))

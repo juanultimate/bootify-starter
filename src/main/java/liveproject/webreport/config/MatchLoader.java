@@ -6,12 +6,10 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import liveproject.webreport.match.Match;
 import liveproject.webreport.match.MatchRepository;
 import lombok.extern.java.Log;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -21,8 +19,7 @@ import java.util.List;
 
 @Log
 @Component
-public class MatchLoader implements
-        ApplicationListener<ContextRefreshedEvent> {
+public class MatchLoader implements CommandLineRunner {
 
     @Value("${testdata.loadfile}")
     private String loadfileResourceName;
@@ -39,7 +36,7 @@ public class MatchLoader implements
     }
 
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    public void run(String... args) throws Exception {
         // load test data if specified
         if (StringUtils.isEmpty(loadFileSeason)) return;
         // if we get here, we load test data
@@ -60,17 +57,17 @@ public class MatchLoader implements
                     m.setSeason(loadFileSeason);
                     repository.save(m);
                     newCount++;
-                    log.info("Adding new record: " + m.getHomeTeam() + " v " + m.getAwayTeam());
+                    log.fine("Adding new record: " + m.getHomeTeam() + " v " + m.getAwayTeam());
                 } else {
                     alreadyCount++;
-                    log.info("Skipping previous record: " + m.getHomeTeam() + " v " + m.getAwayTeam());
+                    log.fine("Skipping previous record: " + m.getHomeTeam() + " v " + m.getAwayTeam());
                 }
             }
         } catch (IOException ioe) {
             throw new RuntimeException("Error initializing database: ", ioe);
         }
-        log.severe("Repo size: "+repository.count());
-        log.severe("  new records: "+newCount);
-        log.severe("  old records: "+alreadyCount);
+        log.info("Repo size: "+repository.count());
+        log.info("  new records: "+newCount);
+        log.info("  old records: "+alreadyCount);
     }
 }

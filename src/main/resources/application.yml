@@ -1,0 +1,17 @@
+server:
+  port: 12080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,env,flyway,health,beans,prometheus
+  endpoint:
+    health:
+      show-details: always
+    beans:
+      enabled: true
+
+testdata:
+  loadfile: classpath:epl2019-2020.json
+  season: 2019-2020

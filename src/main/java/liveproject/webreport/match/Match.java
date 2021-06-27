@@ -16,10 +16,10 @@ import java.util.Date;
 import java.util.Objects;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Builder
 @Table( name = "EPL" )
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Match implements Serializable {
@@ -28,7 +28,7 @@ public class Match implements Serializable {
     public enum Result {
         HOME_WIN('H'), AWAY_WIN('A'), DRAW ('D'), UNK('X');
 
-//        @JsonValue
+        //        @JsonValue
         private char value;
 
         Result(char value) { this.value = value; }
